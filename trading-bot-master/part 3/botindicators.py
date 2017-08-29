@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 class BotIndicators(object):
 	def __init__(self):
@@ -13,19 +13,19 @@ class BotIndicators(object):
 			return dataPoints[-1] * 100 / dataPoints[-period]
 
 	def EMA(self, prices, period):
-		x = numpy.asarray(prices)
+		x = np.asarray(prices)
 		weights = None
-		weights = numpy.exp(numpy.linspace(-1., 0., period))
+		weights = np.exp(np.linspace(-1., 0., period))
 		weights /= weights.sum()
 
-		a = numpy.convolve(x, weights, mode='full')[:len(x)]
+		a = np.convolve(x, weights, mode='full')[:len(x)]
 		a[:period] = a[period]
-	return a
+		return a
 
 	def MACD(self, prices, nslow=26, nfast=12):
 		emaslow = self.EMA(prices, nslow)
 		emafast = self.EMA(prices, nfast)
-	return emaslow, emafast, emafast - emaslow		
+		return emaslow, emafast, emafast - emaslow
 
 	def RSI (self, prices, period=14):
 		deltas = np.diff(prices)
