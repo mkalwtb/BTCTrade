@@ -20,6 +20,8 @@ def main(argv):
 	localMax = []
 	currentResistance = 0.018
 
+
+
 	try:
 		opts, args = getopt.getopt(argv,"hp:c:n:s:e:",["period=","currency=","points="])
 	except getopt.GetoptError:
@@ -49,7 +51,7 @@ def main(argv):
 
 	conn = poloniex('key goes here','key goes here')
 
-	output = open("output.html",'w')
+	output = open("../Output/output.html",'w')
 	output.truncate()
 	output.write("""<html><head><script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script><script type="text/javascript">google.charts.load('current', {'packages':['corechart']});google.charts.setOnLoadCallback(drawChart);function drawChart() {var data = new google.visualization.DataTable();data.addColumn('string', 'time');data.addColumn('number', 'value');data.addColumn({type: 'string', role:'annotation'});data.addColumn({type: 'string', role:'annotationText'});data.addColumn('number', 'trend');data.addRows([""")
 
@@ -63,6 +65,7 @@ def main(argv):
 			dataDate = datetime.datetime.fromtimestamp(int(nextDataPoint['date'])).strftime('%Y-%m-%d %H:%M:%S')
 		elif(startTime and not historicalData):
 			for point in dataPoints:
+                # DATA OUTPUT
 				output.write("['"+point['date']+"',"+point['price']+","+point['label']+","+point['desc']+","+point['trend'])
 				output.write("],\n")
 			output.write("""]);var options = {title: 'Price Chart',legend: { position: 'bottom' }};var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));chart.draw(data, options);}</script></head><body><div id="curve_chart" style="width: 100%; height: 100%"></div></body></html>""")

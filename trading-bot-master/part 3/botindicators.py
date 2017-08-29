@@ -2,7 +2,7 @@ import numpy as np
 
 class BotIndicators(object):
 	def __init__(self):
-		 pass
+		pass
 
 	def movingAverage(self, dataPoints, period):
 		if (len(dataPoints) > 1):
